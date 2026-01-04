@@ -13,8 +13,7 @@ pipeline {
         stage('check python version') {
             steps {
                 sh 'sudo apt update -y'
-                sh 'sudo apt upgrade -y'
-                sh 'python3 -v'
+                sh 'python3 --version'
             }
         }
         stage('docker version') {
