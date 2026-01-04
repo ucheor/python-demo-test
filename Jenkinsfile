@@ -10,9 +10,9 @@ pipeline {
     }
 
     stages {
-        stage('git checkout') {
+        stage('check python version') {
             steps {
-                sh 'sudo apt update'
+                sh 'sudo apt update -y'
                 sh 'sudo apt upgrade -y'
                 sh 'python3 -v'
             }
