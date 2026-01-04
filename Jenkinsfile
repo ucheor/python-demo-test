@@ -10,31 +10,27 @@ pipeline {
     }
 
     stages {
-        stage('check python version') {
-            steps {
-                sh 'sudo apt update -y'
-                sh 'python3 --version'
-            }
-        }
-        stage('docker version') {
-            steps {
-                sh 'docker -v'
-            }
-        }
-        stage('install make') {
-            steps {
-                sh 'sudo apt install make -y'
-                sh 'sudo apt install make-guile -y'
-            }
-        }
-
-        /*
         stage('git checkout') {
             steps {
-                git branch: 'master', changelog: false, poll: false, \
-                url: 'https://github.com/jaiswaladi246/secretsanta-generator.git'
+                git branch: 'main', changelog: false, poll: false, \
+                url: 'https://github.com/ucheor/python-demo-test.git'
             }
         }
+        stage('docker build') {
+            steps {
+                sh "make image"
+            }
+        }
+        stage('docker push') {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                        sh 'make push'
+                    }
+                }
+            }
+        }
+        /*
         stage('compile source code') {
             steps {
                 sh "mvn clean compile"
